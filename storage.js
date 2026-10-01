@@ -13,8 +13,11 @@ const Store = (() => {
   const KEY = "superflash";
   const LEGACY_KEY = "superflash:mult-2-12"; // first prototype, before schemas
   const BACKUP_PREFIX = "superflash:backup:";
-  const SCHEMA = 1;
-  const LOG_FIELDS = ["t", "card", "ms", "ok", "ans"];
+  const SCHEMA = 2;
+  // t: answer time (ms since epoch), card: card id, ms: response time,
+  // ok: 1 if correct, ans: what was typed ("?" = "I don't know"),
+  // deck: id of the deck being practiced.
+  const LOG_FIELDS = ["t", "card", "ms", "ok", "ans", "deck"];
   const DEFAULT_SETTINGS = { autosubmit: true, sound: true };
 
   // migrations[n] turns schema-n data into schema-(n+1) data.
@@ -39,6 +42,15 @@ const Store = (() => {
       }
       return { schema: 1, settings: old.settings || {}, log };
     },
+
+    // 1 -> 2: log entries gain a deck id. Everything before this came from
+    // the only deck that existed then.
+    1: old => ({
+      ...old,
+      schema: 2,
+      log: (Array.isArray(old.log) ? old.log : []).map(e =>
+        Array.isArray(e) ? [e[0], e[1], e[2], e[3], e[4] ?? "", "mult-2-12"] : e),
+    }),
   };
 
   let readOnly = false;
@@ -70,7 +82,7 @@ const Store = (() => {
       const key = e[0] + "|" + e[1];
       if (seen.has(key)) continue;
       seen.add(key);
-      log.push([e[0], e[1], Math.round(e[2]), e[3] ? 1 : 0, String(e[4] ?? "")]);
+      log.push([e[0], e[1], Math.round(e[2]), e[3] ? 1 : 0, String(e[4] ?? ""), String(e[5] ?? "")]);
     }
     log.sort((a, b) => a[0] - b[0]);
     const out = {

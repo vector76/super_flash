@@ -141,7 +141,7 @@
 
   function record(correct, value, ms) {
     const now = Date.now();
-    data.log.push([now, current.id, ms, correct ? 1 : 0, value]);
+    data.log.push([now, current.id, ms, correct ? 1 : 0, value, deck.id]);
     SRS.review(states[current.id] || (states[current.id] = SRS.newState()), correct, ms, now);
     persist();
     requestPersistentStorage();

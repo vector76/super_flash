@@ -44,7 +44,7 @@ harmless, and backups from two devices can be combined.
 ### How storage stays compatible as the game changes
 
 - **The review log is the only thing stored.** Each answer is one entry:
-  `[time, cardId, ms, correct, typedAnswer]`. Scheduling state (intervals, ease, due
+  `[time, cardId, ms, correct, typedAnswer, deckId]`. Scheduling state (intervals, ease, due
   dates) is never saved. It is rebuilt at load by replaying the log through `srs.js`,
   so changing the scheduler re-applies to all past answers automatically.
 - **Card ids name the fact, not the deck** (`mul:7x8`). A deck can be resized, split,

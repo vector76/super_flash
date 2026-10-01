@@ -4,6 +4,10 @@
 // Card ids are the permanent key for review history, so they describe the
 // fact itself rather than the deck ("mul:7x8", not "deck1:42"). Never reuse an
 // id for a different fact; if an id must change, add a storage migration.
+//
+// Deck ids are recorded with every answer, so they are permanent too. If a
+// deck's contents change substantially (e.g. 2–12 becomes 2–15), give it a new
+// id rather than renaming the old one.
 
 const Decks = {
   multiplication: (() => {
