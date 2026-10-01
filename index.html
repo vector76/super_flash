@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Super Flash</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Super Flash</h1>
+    <nav>
+      <button id="tab-practice" class="tab active" type="button">Practice</button>
+      <button id="tab-progress" class="tab" type="button">Progress</button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="banner" class="banner hidden" role="alert"></div>
+
+    <section id="view-practice" class="view">
+      <div class="session-stats">
+        <div><span id="stat-answered">0</span><label>answered</label></div>
+        <div><span id="stat-accuracy">–</span><label>accuracy</label></div>
+        <div><span id="stat-avg">–</span><label>avg time</label></div>
+        <div><span id="stat-streak">0</span><label>streak</label></div>
+      </div>
+
+      <div id="set-dots" class="set-dots" aria-label="Progress through this set"></div>
+
+      <div id="card" class="card">
+        <div id="card-badge" class="badge"></div>
+        <div id="prompt" class="prompt">Press Start</div>
+        <form id="answer-form" autocomplete="off">
+          <input id="answer" type="text" inputmode="numeric" pattern="[0-9]*"
+                 maxlength="4" aria-label="Your answer" disabled>
+        </form>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="card-actions" class="card-actions hidden">
+          <button id="idk-btn" type="button">I don't know</button>
+          <button id="pause-btn" type="button">Pause <kbd>Esc</kbd></button>
+        </div>
+        <div id="timer-bar" class="timer-bar"><div id="timer-fill"></div></div>
+
+        <div id="pause-overlay" class="overlay hidden">
+          <div class="overlay-title">Paused</div>
+          <p id="pause-note" class="hint"></p>
+          <button id="resume-btn" class="primary" type="button">Resume</button>
+        </div>
+      </div>
+
+      <div id="summary" class="card summary hidden">
+        <div id="summary-title" class="summary-title">Set complete</div>
+        <div class="summary-stats">
+          <div><span id="sum-correct"></span><label>correct</label></div>
+          <div><span id="sum-gold"></span><label>gold stars</label></div>
+          <div><span id="sum-silver"></span><label>silver stars</label></div>
+          <div><span id="sum-avg"></span><label>avg time</label></div>
+        </div>
+        <p id="summary-msg" class="hint"></p>
+        <button id="continue-btn" class="primary" type="button">Next set</button>
+      </div>
+
+      <div class="controls">
+        <button id="start-btn" class="primary" type="button">Start</button>
+        <div class="toggles">
+          <label class="toggle">
+            <input id="autosubmit" type="checkbox" checked>
+            Auto-submit when the right number of digits is typed
+          </label>
+          <label class="toggle">
+            <input id="sound" type="checkbox" checked>
+            Sound
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-progress" class="view hidden">
+      <p class="hint">Each cell is one fact (row × column). Color shows how well it is learned; hover or tap for details.</p>
+      <div id="grid" class="grid"></div>
+      <div class="legend">
+        <span><i class="lv-new"></i>New</span>
+        <span><i class="lv-0"></i>Struggling</span>
+        <span><i class="lv-1"></i>Learning</span>
+        <span><i class="lv-2"></i>Familiar</span>
+        <span><i class="lv-3"></i>Strong</span>
+        <span><i class="lv-4"></i>Mastered</span>
+      </div>
+      <div id="cell-detail" class="cell-detail"></div>
+
+      <div class="data-panel">
+        <h2>Your data</h2>
+        <p class="hint">Progress is saved in this browser only. Download a backup now and then. Restoring
+          combines the backup with the history already here, so it never erases anything.</p>
+        <p id="data-info" class="data-info"></p>
+        <div class="data-actions">
+          <button id="export-btn" type="button">Download backup</button>
+          <button id="import-btn" type="button">Restore from backup…</button>
+          <input id="import-file" type="file" accept=".json,application/json" hidden>
+        </div>
+        <p id="data-msg" class="data-msg" aria-live="polite"></p>
+        <button id="reset-btn" type="button">Reset all progress</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bump ?v= on every release so browsers never mix old and new files. -->
+  <script src="srs.js?v=4"></script>
+  <script src="storage.js?v=4"></script>
+  <script src="decks.js?v=4"></script>
+  <script src="effects.js?v=4"></script>
+  <script src="app.js?v=4"></script>
+</body>
+</html>

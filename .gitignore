@@ -1,0 +1,6 @@
+# Local Claude Code / editor settings
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
